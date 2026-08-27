@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LUC Marketplace — Shop Everything, One Place</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner container">
+      <a href="index.html" class="logo">LOGOZOR UNIQUE COMPUTER <span class="accent-orange">Marketplace</span></a>
+
+      <div class="header-search">
+        <input type="text" id="searchInputDesktop" placeholder="Search products..." />
+      </div>
+
+      <div class="header-actions">
+        <a href="cart.html" class="icon-link" aria-label="Cart">
+          🛒<span class="cart-badge" id="cartBadgeDesktop" hidden>0</span>
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+      </div>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="orders.html">My Orders</a>
+        <a href="login.html">Login / Sign Up</a>
+      </nav>
+    </div>
+
+    <div class="mobile-search">
+      <input type="text" id="searchInputMobile" placeholder="Search products..." />
+    </div>
+
+    <div class="category-bar" id="categoryBar">
+      <button class="chip active" data-category="all">All</button>
+      <!-- other category chips injected by app.js -->
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="container">
+      <h1>Shop everything, delivered your way</h1>
+      <p>Genuine products at fair prices — pay with Paystack or checkout instantly on WhatsApp.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <section class="products-section" id="products">
+      <h2 id="sectionTitle">All Products</h2>
+
+      <div id="products-loading" class="spinner" role="status" aria-label="Loading products"></div>
+      <div id="products-grid" class="product-grid"></div>
+      <p id="products-empty" class="empty-msg" hidden>No products available right now. Check back soon!</p>
+    </section>
+  </main>
+
+  <!-- ===== PRODUCT DETAIL MODAL ===== -->
+  <div id="productModal" class="modal" hidden>
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+      <img id="modalImg" class="modal-product-img" src="" alt="" />
+      <h3 id="modalName"></h3>
+      <span class="badge" id="modalCategory"></span>
+      <p class="product-desc" id="modalDesc" style="-webkit-line-clamp: unset;"></p>
+      <div class="price-row">
+        <span class="price-currency">GHS</span>
+        <span class="price" id="modalPrice"></span>
+      </div>
+      <p id="modalStock" class="hint"></p>
+
+      <div class="qty-stepper" id="modalQtyStepper">
+        <button type="button" id="qtyMinus">&minus;</button>
+        <span id="qtyValue">1</span>
+        <button type="button" id="qtyPlus">+</button>
+      </div>
+
+      <button class="btn btn-primary" id="modalAddBtn">Add to Cart</button>
+      <p id="modalMsg" class="form-msg" hidden></p>
+    </div>
+  </div>
+
+  <!-- ===== BOTTOM MOBILE NAV ===== -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="active"><span class="bn-icon">🏠</span>Home</a>
+    <a href="cart.html"><span class="bn-icon">🛒</span>Cart<span class="cart-badge" id="cartBadgeMobile" hidden>0</span></a>
+    <a href="orders.html"><span class="bn-icon">📦</span>Orders</a>
+    <a href="login.html"><span class="bn-icon">👤</span>Account</a>
+  </nav>
+
+  <footer class="site-footer">
+    <p><a href="admin.html" class="footer-admin-entry" aria-label="Site">&copy;</a> 2026 LUC Marketplace — Logozor Unique Computer. </p>
+    <p>By Evoxera Technology</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="cart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

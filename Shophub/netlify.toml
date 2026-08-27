@@ -1,0 +1,18 @@
+# LUC Marketplace — Netlify config
+# NOTE: if your site's HTML files live in a subfolder in your GitHub repo
+# (rather than the repo root), change `publish` below to match, e.g.
+# publish = "luc-marketplace"
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/verify-paystack"
+  to = "/.netlify/functions/verify-paystack"
+  status = 200
+
+[[redirects]]
+  from = "/api/paystack-webhook"
+  to = "/.netlify/functions/paystack-webhook"
+  status = 200
