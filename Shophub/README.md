@@ -5,7 +5,7 @@ A general-purpose Jumia/Temu-style e-commerce demo, rebuilt from the SwapZone
 Market codebase. Same Supabase project and connection code — new tables so
 nothing from SwapZone is touched or removed.
 
-## What's new vs SwapZone Market
+## What's new in Market
 
 - General items instead of just phones — flexible categories, stock counts
 - Cart (localStorage, works without login) → Checkout → Paystack **or** WhatsApp
@@ -107,7 +107,7 @@ is:
    `Shop Hub_PAYSTACK_PUBLIC_KEY` in `supabase-config.js` for the live public
    key, then redeploy.
 
-## 7. Confirming MoMo / WhatsApp payments manually
+## 7. Confirming Paystack payment / WhatsApp payments manually
 
 Orders placed via WhatsApp checkout are saved as `payment_status: pending`
 since payment happens outside the app. In the admin dashboard's **Orders**
