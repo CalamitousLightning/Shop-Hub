@@ -1,5 +1,5 @@
 /* =========================================================
-   LUC Marketplace — netlify/functions/verify-paystack.js
+   Shop Hub Marketplace — netlify/functions/verify-paystack.js
 
    Called by checkout.js right after the Paystack popup reports
    success. Re-verifies the transaction with Paystack's API using
@@ -65,7 +65,7 @@ exports.handler = async (event) => {
 
     // 2. Load the order (id === reference by design) using the service role key.
     const orderRes = await fetch(
-      `${SUPABASE_URL}/rest/v1/luc_orders?id=eq.${encodeURIComponent(reference)}&select=id,user_id,total,payment_method,payment_status`,
+      `${SUPABASE_URL}/rest/v1/Shop Hub_orders?id=eq.${encodeURIComponent(reference)}&select=id,user_id,total,payment_method,payment_status`,
       {
         headers: {
           apikey: SUPABASE_SERVICE_ROLE_KEY,
@@ -107,7 +107,7 @@ exports.handler = async (event) => {
 
     // 4. Mark the order paid (service role key bypasses RLS, so this is
     //    the ONLY place other than the admin dashboard that can do this).
-    const updateRes = await fetch(`${SUPABASE_URL}/rest/v1/luc_orders?id=eq.${encodeURIComponent(reference)}`, {
+    const updateRes = await fetch(`${SUPABASE_URL}/rest/v1/Shop Hub_orders?id=eq.${encodeURIComponent(reference)}`, {
       method: "PATCH",
       headers: {
         apikey: SUPABASE_SERVICE_ROLE_KEY,

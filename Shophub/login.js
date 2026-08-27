@@ -1,5 +1,5 @@
 /* =========================================================
-   LUC Marketplace — login.js
+   Shop Hub Marketplace — login.js
    Customer email/password login & signup via Supabase Auth.
    Supports ?redirect=checkout so checkout.html can send
    unauthenticated shoppers here and bring them right back.

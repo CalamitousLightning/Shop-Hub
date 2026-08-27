@@ -1,5 +1,5 @@
 /* =========================================================
-   LUC Marketplace — checkout.js
+   Shop Hub Marketplace — checkout.js
    Requires login. Reads the cart from localStorage, lets the
    shopper fill delivery details, then either:
      - Pays with Paystack (inline popup) and records the order, or
@@ -38,7 +38,7 @@ async function init() {
   }
   currentUser = session.user;
 
-  const cart = lucGetCart();
+  const cart = Shop HubGetCart();
   loadingEl.hidden = true;
 
   if (cart.length === 0) {
@@ -58,7 +58,7 @@ function renderSummary(cart) {
   summaryItems.innerHTML = cart
     .map((item) => `<div>${item.qty} x ${escapeHtml(item.name)} — GHS ${(item.qty * item.price).toFixed(2)}</div>`)
     .join("");
-  checkoutTotal.textContent = lucCartTotal().toFixed(2);
+  checkoutTotal.textContent = Shop HubCartTotal().toFixed(2);
 }
 
 function getDeliveryDetails() {
@@ -72,9 +72,9 @@ function getDeliveryDetails() {
   return { name, phone, address };
 }
 
-/** Inserts the order row into luc_orders. Returns the created order, or null on failure. */
+/** Inserts the order row into Shop Hub_orders. Returns the created order, or null on failure. */
 async function createOrder({ paymentMethod, paymentStatus, paystackReference = null }) {
-  const cart = lucGetCart();
+  const cart = Shop HubGetCart();
   const details = getDeliveryDetails();
   if (!details) return null;
 
@@ -87,7 +87,7 @@ async function createOrder({ paymentMethod, paymentStatus, paystackReference = n
   }));
 
   const { data, error } = await supabaseClient
-    .from("luc_orders")
+    .from("Shop Hub_orders")
     .insert([
       {
         user_id: currentUser.id,
@@ -96,7 +96,7 @@ async function createOrder({ paymentMethod, paymentStatus, paystackReference = n
         customer_email: currentUser.email,
         delivery_address: details.address,
         items: items,
-        total: lucCartTotal(),
+        total: Shop HubCartTotal(),
         payment_method: paymentMethod,
         payment_status: paymentStatus,
         paystack_reference: paystackReference,
@@ -124,7 +124,7 @@ document.getElementById("paystackBtn").addEventListener("click", async () => {
   const details = getDeliveryDetails();
   if (!details) return;
 
-  const total = lucCartTotal();
+  const total = Shop HubCartTotal();
   if (total <= 0) {
     showMsg("Your cart total must be greater than zero.", "error");
     return;
@@ -140,7 +140,7 @@ document.getElementById("paystackBtn").addEventListener("click", async () => {
   }
 
   const handler = PaystackPop.setup({
-    key: window.LUC_PAYSTACK_PUBLIC_KEY,
+    key: window.Shop Hub_PAYSTACK_PUBLIC_KEY,
     email: currentUser.email,
     amount: Math.round(total * 100), // GHS to pesewas
     currency: "GHS",
@@ -159,7 +159,7 @@ document.getElementById("paystackBtn").addEventListener("click", async () => {
           .then((res) => res.json())
           .then((result) => {
             if (result.success) {
-              lucClearCart();
+              Shop HubClearCart();
               window.location.href = "orders.html";
             } else {
               showMsg(
@@ -194,12 +194,12 @@ document.getElementById("whatsappBtn").addEventListener("click", async () => {
   const details = getDeliveryDetails();
   if (!details) return;
 
-  const cart = lucGetCart();
+  const cart = Shop HubGetCart();
   const lines = cart.map((item) => `• ${item.qty} x ${item.name} — GHS ${(item.qty * item.price).toFixed(2)}`);
   const message =
-    `Hi LUC Marketplace! I'd like to place an order:\n\n` +
+    `Hi Shop Hub Marketplace! I'd like to place an order:\n\n` +
     lines.join("\n") +
-    `\n\nTotal: GHS ${lucCartTotal().toFixed(2)}` +
+    `\n\nTotal: GHS ${Shop HubCartTotal().toFixed(2)}` +
     `\n\nName: ${details.name}` +
     `\nPhone: ${details.phone}` +
     `\nDelivery Address: ${details.address}`;
@@ -207,10 +207,10 @@ document.getElementById("whatsappBtn").addEventListener("click", async () => {
   const order = await createOrder({ paymentMethod: "whatsapp", paymentStatus: "pending" });
   if (!order) return;
 
-  const waUrl = `https://wa.me/${window.LUC_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  const waUrl = `https://wa.me/${window.Shop Hub_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   window.open(waUrl, "_blank");
 
-  lucClearCart();
+  Shop HubClearCart();
   window.location.href = "orders.html";
 });
 

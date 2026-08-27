@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Your Cart — LUC Marketplace</title>
+<title>Your Cart — Shop Hub Marketplace</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <header class="site-header">
     <div class="header-inner container">
-      <a href="index.html" class="logo">Logozor Unique Computer<span class="accent-orange">Marketplace</span></a>
+      <a href="index.html" class="logo">Shop Hub<span class="accent-orange">Marketplace</span></a>
       <div class="header-actions">
         <a href="cart.html" class="icon-link" aria-label="Cart">
           🛒<span class="cart-badge" id="cartBadgeDesktop" hidden>0</span>
@@ -55,8 +55,8 @@
   </nav>
 
   <footer class="site-footer">
-    <p><a href="admin.html" class="footer-admin-entry" aria-label="Site">&copy;</a> 2026 LUC Marketplace — Logozor Unique Computer.</p>
-    <p>By Evoxera TEchnology</p>
+    <p><a href="admin.html" class="footer-admin-entry" aria-label="Site">&copy;</a> 2026 Shop Hub Marketplace — Shop Hub.</p>
+    <p>By Nameless Eternal</p>
   </footer>
 
   <script src="cart.js"></script>
@@ -73,7 +73,7 @@
     }
 
     function renderCart() {
-      const cart = lucGetCart();
+      const cart = Shop HubGetCart();
 
       if (cart.length === 0) {
         cartEmpty.hidden = false;
@@ -105,8 +105,8 @@
         )
         .join("");
 
-      summaryCount.textContent = `${lucCartCount()} item(s)`;
-      summaryTotal.textContent = lucCartTotal().toFixed(2);
+      summaryCount.textContent = `${Shop HubCartCount()} item(s)`;
+      summaryTotal.textContent = Shop HubCartTotal().toFixed(2);
     }
 
     cartList.addEventListener("click", (e) => {
@@ -114,16 +114,16 @@
       if (!id) return;
 
       if (e.target.classList.contains("qty-inc")) {
-        const item = lucGetCart().find((i) => i.id === id);
+        const item = Shop HubGetCart().find((i) => i.id === id);
         const stock = Number(item?.stock ?? 999);
-        lucUpdateQty(id, Math.min((item?.qty || 0) + 1, stock || 999));
+        Shop HubUpdateQty(id, Math.min((item?.qty || 0) + 1, stock || 999));
         renderCart();
       } else if (e.target.classList.contains("qty-dec")) {
-        const item = lucGetCart().find((i) => i.id === id);
-        lucUpdateQty(id, (item?.qty || 1) - 1);
+        const item = Shop HubGetCart().find((i) => i.id === id);
+        Shop HubUpdateQty(id, (item?.qty || 1) - 1);
         renderCart();
       } else if (e.target.classList.contains("cart-item-remove")) {
-        lucRemoveFromCart(id);
+        Shop HubRemoveFromCart(id);
         renderCart();
       }
     });

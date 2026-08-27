@@ -1,5 +1,5 @@
 /* =========================================================
-   LUC Marketplace — netlify/functions/paystack-webhook.js
+   Shop Hub Marketplace — netlify/functions/paystack-webhook.js
 
    Safety net for payments. If a customer closes the tab right
    after paying (before verify-paystack.js gets to run), Paystack
@@ -44,12 +44,12 @@ exports.handler = async (event) => {
   }
 
   if (payload.event === "charge.success") {
-    const reference = payload.data.reference; // this is the luc_orders.id, see checkout.js
+    const reference = payload.data.reference; // this is the Shop Hub_orders.id, see checkout.js
     const amountPaid = payload.data.amount / 100;
 
     try {
       const orderRes = await fetch(
-        `${SUPABASE_URL}/rest/v1/luc_orders?id=eq.${encodeURIComponent(reference)}&select=id,total,payment_status`,
+        `${SUPABASE_URL}/rest/v1/Shop Hub_orders?id=eq.${encodeURIComponent(reference)}&select=id,total,payment_status`,
         {
           headers: {
             apikey: SUPABASE_SERVICE_ROLE_KEY,
@@ -61,7 +61,7 @@ exports.handler = async (event) => {
       const order = orders && orders[0];
 
       if (order && order.payment_status !== "paid" && Math.abs(amountPaid - Number(order.total)) < 0.01) {
-        await fetch(`${SUPABASE_URL}/rest/v1/luc_orders?id=eq.${encodeURIComponent(reference)}`, {
+        await fetch(`${SUPABASE_URL}/rest/v1/Shop Hub_orders?id=eq.${encodeURIComponent(reference)}`, {
           method: "PATCH",
           headers: {
             apikey: SUPABASE_SERVICE_ROLE_KEY,

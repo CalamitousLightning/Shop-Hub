@@ -1,5 +1,5 @@
 -- =========================================================
--- LUC Marketplace — RLS hardening patch
+-- Shop Hub Marketplace — RLS hardening patch
 -- Run in Supabase SQL Editor. Safe to run any time after setup.sql.
 --
 -- Problem: the original "Users can insert their own orders" policy only
@@ -13,10 +13,10 @@
 -- admin email) can move it to 'paid' afterwards.
 -- =========================================================
 
-drop policy if exists "Users can insert their own orders" on luc_orders;
+drop policy if exists "Users can insert their own orders" on Shop Hub_orders;
 
 create policy "Users can insert their own orders"
-  on luc_orders for insert
+  on Shop Hub_orders for insert
   to authenticated
   with check (
     user_id = auth.uid()

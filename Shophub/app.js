@@ -1,6 +1,6 @@
 /* =========================================================
-   LUC Marketplace — app.js (index.html)
-   Fetches luc_products, renders the grid, handles category
+   Shop Hub Marketplace — app.js (index.html)
+   Fetches Shop Hub_products, renders the grid, handles category
    chips, search, the product detail modal, and add-to-cart.
    ========================================================= */
 
@@ -96,7 +96,7 @@ async function loadProducts() {
   grid.innerHTML = "";
 
   const { data, error } = await supabaseClient
-    .from("luc_products")
+    .from("Shop Hub_products")
     .select("*")
     .order("created_at", { ascending: false });
 
@@ -116,8 +116,8 @@ async function loadProducts() {
 
 /* ===== Realtime: new/updated/deleted products show up instantly ===== */
 supabaseClient
-  .channel("luc-products-realtime")
-  .on("postgres_changes", { event: "*", schema: "public", table: "luc_products" }, () => {
+  .channel("Shop Hub-products-realtime")
+  .on("postgres_changes", { event: "*", schema: "public", table: "Shop Hub_products" }, () => {
     loadProducts();
   })
   .subscribe();
@@ -198,7 +198,7 @@ grid.addEventListener("click", (e) => {
   if (addBtn) {
     // Quick add straight from the card, no need to open the modal
     if (addBtn.disabled) return;
-    lucAddToCart(product, 1);
+    Shop HubAddToCart(product, 1);
     addBtn.textContent = "Added ✓";
     setTimeout(() => {
       addBtn.textContent = "Add to Cart";
@@ -221,7 +221,7 @@ document.getElementById("qtyPlus").addEventListener("click", () => {
 
 modalAddBtn.addEventListener("click", () => {
   if (!selectedProduct) return;
-  lucAddToCart(selectedProduct, selectedQty);
+  Shop HubAddToCart(selectedProduct, selectedQty);
   modalMsg.textContent = "Added to cart!";
   modalMsg.className = "form-msg success";
   modalMsg.hidden = false;

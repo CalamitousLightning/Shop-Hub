@@ -1,7 +1,7 @@
-# LUC Marketplace — Netlify config
+# Shop Hub Marketplace — Netlify config
 # NOTE: if your site's HTML files live in a subfolder in your GitHub repo
 # (rather than the repo root), change `publish` below to match, e.g.
-# publish = "luc-marketplace"
+# publish = "Shop Hub-marketplace"
 
 [build]
   publish = "."

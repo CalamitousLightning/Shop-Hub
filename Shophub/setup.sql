@@ -1,18 +1,18 @@
 -- =========================================================
--- LUC Marketplace — Supabase setup script
+-- Shop Hub Marketplace — Supabase setup script
 -- Run this in: Supabase Dashboard -> SQL Editor -> New query
 --
--- This ONLY creates new tables (luc_products, luc_orders) and a
--- new storage bucket (luc-product-images). It does NOT touch the
+-- This ONLY creates new tables (Shop Hub_products, Shop Hub_orders) and a
+-- new storage bucket (Shop Hub-product-images). It does NOT touch the
 -- existing SwapZone "products" table or bucket.
 --
 -- BEFORE RUNNING: replace every occurrence of 'YOUR_ADMIN_EMAIL'
--- below with the exact email you set as window.LUC_ADMIN_EMAIL
+-- below with the exact email you set as window.Shop Hub_ADMIN_EMAIL
 -- in supabase-config.js.
 -- =========================================================
 
 -- 1. Products table
-create table if not exists luc_products (
+create table if not exists Shop Hub_products (
   id uuid primary key default gen_random_uuid(),
   image_url text,
   name text not null,
@@ -23,29 +23,29 @@ create table if not exists luc_products (
   created_at timestamptz not null default now()
 );
 
-alter table luc_products enable row level security;
+alter table Shop Hub_products enable row level security;
 
-create policy "Public can view LUC products"
-  on luc_products for select
+create policy "Public can view Shop Hub products"
+  on Shop Hub_products for select
   using (true);
 
-create policy "Admin can insert LUC products"
-  on luc_products for insert
+create policy "Admin can insert Shop Hub products"
+  on Shop Hub_products for insert
   to authenticated
   with check (auth.jwt() ->> 'email' = 'YOUR_ADMIN_EMAIL');
 
-create policy "Admin can update LUC products"
-  on luc_products for update
+create policy "Admin can update Shop Hub products"
+  on Shop Hub_products for update
   to authenticated
   using (auth.jwt() ->> 'email' = 'YOUR_ADMIN_EMAIL');
 
-create policy "Admin can delete LUC products"
-  on luc_products for delete
+create policy "Admin can delete Shop Hub products"
+  on Shop Hub_products for delete
   to authenticated
   using (auth.jwt() ->> 'email' = 'YOUR_ADMIN_EMAIL');
 
 -- 2. Orders table
-create table if not exists luc_orders (
+create table if not exists Shop Hub_orders (
   id uuid primary key default gen_random_uuid(),
   user_id uuid references auth.users(id) not null,
   customer_name text not null,
@@ -62,49 +62,49 @@ create table if not exists luc_orders (
   created_at timestamptz not null default now()
 );
 
-alter table luc_orders enable row level security;
+alter table Shop Hub_orders enable row level security;
 
 -- Customers can create their own orders
 create policy "Users can insert their own orders"
-  on luc_orders for insert
+  on Shop Hub_orders for insert
   to authenticated
   with check (user_id = auth.uid());
 
 -- Customers can view only their own orders
 create policy "Users can view their own orders"
-  on luc_orders for select
+  on Shop Hub_orders for select
   to authenticated
   using (user_id = auth.uid());
 
 -- Admin can view every order
 create policy "Admin can view all orders"
-  on luc_orders for select
+  on Shop Hub_orders for select
   to authenticated
   using (auth.jwt() ->> 'email' = 'YOUR_ADMIN_EMAIL');
 
 -- Admin can update order status (e.g. mark shipped/delivered)
 create policy "Admin can update orders"
-  on luc_orders for update
+  on Shop Hub_orders for update
   to authenticated
   using (auth.jwt() ->> 'email' = 'YOUR_ADMIN_EMAIL');
 
 -- =========================================================
--- STORAGE: luc-product-images bucket
+-- STORAGE: Shop Hub-product-images bucket
 -- Create the bucket first from the Dashboard UI:
--- Storage -> New bucket -> name: luc-product-images -> Public bucket: ON
+-- Storage -> New bucket -> name: Shop Hub-product-images -> Public bucket: ON
 -- Then run the policies below.
 -- =========================================================
 
-create policy "Public can view LUC product images"
+create policy "Public can view Shop Hub product images"
   on storage.objects for select
-  using (bucket_id = 'luc-product-images');
+  using (bucket_id = 'Shop Hub-product-images');
 
-create policy "Admin can upload LUC product images"
+create policy "Admin can upload Shop Hub product images"
   on storage.objects for insert
   to authenticated
-  with check (bucket_id = 'luc-product-images' and auth.jwt() ->> 'email' = 'YOUR_ADMIN_EMAIL');
+  with check (bucket_id = 'Shop Hub-product-images' and auth.jwt() ->> 'email' = 'YOUR_ADMIN_EMAIL');
 
-create policy "Admin can delete LUC product images"
+create policy "Admin can delete Shop Hub product images"
   on storage.objects for delete
   to authenticated
-  using (bucket_id = 'luc-product-images' and auth.jwt() ->> 'email' = 'YOUR_ADMIN_EMAIL');
+  using (bucket_id = 'Shop Hub-product-images' and auth.jwt() ->> 'email' = 'YOUR_ADMIN_EMAIL');

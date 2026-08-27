@@ -1,5 +1,5 @@
-# LUC Marketplace
-**LUC = Logozor Unique Computer**
+# Shop Hub Marketplace
+**Shop Hub = Shop Hub**
 
 A general-purpose Jumia/Temu-style e-commerce demo, rebuilt from the SwapZone
 Market codebase. Same Supabase project and connection code — new tables so
@@ -16,9 +16,9 @@ nothing from SwapZone is touched or removed.
 
 1. Open your Supabase project → **SQL Editor** → New query.
 2. Open `setup.sql`, replace every `YOUR_ADMIN_EMAIL` with your real admin
-   email address, then run it. This creates `luc_products` and `luc_orders`
+   email address, then run it. This creates `Shop Hub_products` and `Shop Hub_orders`
    only — it does not touch the old `products` table.
-3. Go to **Storage** → New bucket → name it exactly `luc-product-images` →
+3. Go to **Storage** → New bucket → name it exactly `Shop Hub-product-images` →
    turn **Public bucket** ON → Save. (The storage policies at the bottom of
    `setup.sql` already assume this bucket name.)
 4. Go to **Authentication → Users** → Add user → create your admin account
@@ -29,9 +29,9 @@ nothing from SwapZone is touched or removed.
 Open `supabase-config.js` and set:
 
 ```js
-window.LUC_ADMIN_EMAIL = "your-admin-email@example.com";       // must match setup.sql
-window.LUC_WHATSAPP_NUMBER = "233241234567";                    // no + or spaces
-window.LUC_PAYSTACK_PUBLIC_KEY = "pk_test_xxxxxxxxxxxxxxxxxxxx"; // Paystack PUBLIC key only
+window.Shop Hub_ADMIN_EMAIL = "your-admin-email@example.com";       // must match setup.sql
+window.Shop Hub_WHATSAPP_NUMBER = "233241234567";                    // no + or spaces
+window.Shop Hub_PAYSTACK_PUBLIC_KEY = "pk_test_xxxxxxxxxxxxxxxxxxxx"; // Paystack PUBLIC key only
 ```
 
 Get the Paystack public key from your Paystack Dashboard → Settings → API
@@ -55,7 +55,7 @@ to every visitor's browser.
   pesewas conversion is automatic). On success, an order is saved with
   `payment_status = 'paid'`.
 - **WhatsApp**: opens `wa.me` with a prefilled order message (items, total,
-  delivery details) to `LUC_WHATSAPP_NUMBER`. An order is saved with
+  delivery details) to `Shop Hub_WHATSAPP_NUMBER`. An order is saved with
   `payment_status = 'pending'` for you to confirm manually once payment is
   received.
 
@@ -104,7 +104,7 @@ is:
    set it to `https://YOUR-SITE.netlify.app/api/paystack-webhook`.
 4. Test with a `sk_test_...` key and Paystack's test cards first. Once
    confirmed working, swap `PAYSTACK_SECRET_KEY` for the live key and
-   `LUC_PAYSTACK_PUBLIC_KEY` in `supabase-config.js` for the live public
+   `Shop Hub_PAYSTACK_PUBLIC_KEY` in `supabase-config.js` for the live public
    key, then redeploy.
 
 ## 7. Confirming MoMo / WhatsApp payments manually
@@ -123,7 +123,7 @@ people you trust to confirm payments honestly.
   email — the client-side check in `admin.js` is just a UX nicety, not the
   real gate.
 - If you add more admins later, you'll need to update the RLS policies in
-  `setup.sql` (e.g. check against a list, or a `luc_admins` table) instead
+  `setup.sql` (e.g. check against a list, or a `Shop Hub_admins` table) instead
   of a single hardcoded email.
 - **Run `harden-orders-rls.sql`** (Supabase SQL Editor) if you haven't
   already — it closes a gap where the original insert policy let a

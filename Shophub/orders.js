@@ -1,6 +1,6 @@
 /* =========================================================
-   LUC Marketplace — orders.js
-   Shows the logged-in customer's own orders from luc_orders.
+   Shop Hub Marketplace — orders.js
+   Shows the logged-in customer's own orders from Shop Hub_orders.
    ========================================================= */
 
 const supabaseClient = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
@@ -54,7 +54,7 @@ async function loadOrders() {
   }
 
   const { data, error } = await supabaseClient
-    .from("luc_orders")
+    .from("Shop Hub_orders")
     .select("*")
     .eq("user_id", session.user.id)
     .order("created_at", { ascending: false });

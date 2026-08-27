@@ -1,11 +1,11 @@
 /* =========================================================
-   LUC Marketplace — admin.js
+   Shop Hub Marketplace — admin.js
    Runs on admin.html:
      - Email/password login (Supabase Auth), restricted to
-       window.LUC_ADMIN_EMAIL (real enforcement is via RLS,
+       window.Shop Hub_ADMIN_EMAIL (real enforcement is via RLS,
        see setup.sql — this check just improves the UI).
-     - Add / edit / delete products in luc_products.
-     - Orders tab: list every order in luc_orders and update
+     - Add / edit / delete products in Shop Hub_products.
+     - Orders tab: list every order in Shop Hub_orders and update
        its order_status.
    ========================================================= */
 
@@ -28,7 +28,7 @@ function escapeHtml(str) {
 
 async function checkSession() {
   const { data: { session } } = await supabaseClient.auth.getSession();
-  const isAdmin = !!session && session.user.email?.toLowerCase() === window.LUC_ADMIN_EMAIL.toLowerCase();
+  const isAdmin = !!session && session.user.email?.toLowerCase() === window.Shop Hub_ADMIN_EMAIL.toLowerCase();
 
   if (session && !isAdmin) {
     // Logged in, but not the admin account — sign out immediately.
@@ -63,7 +63,7 @@ loginForm.addEventListener("submit", async (e) => {
     return;
   }
 
-  if (data.user.email?.toLowerCase() !== window.LUC_ADMIN_EMAIL.toLowerCase()) {
+  if (data.user.email?.toLowerCase() !== window.Shop Hub_ADMIN_EMAIL.toLowerCase()) {
     await supabaseClient.auth.signOut();
     loginError.textContent = "This account is not authorized as admin.";
     loginError.hidden = false;
@@ -139,12 +139,12 @@ productForm.addEventListener("submit", async (e) => {
       const filePath = `${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`;
 
       const { error: uploadError } = await supabaseClient.storage
-        .from("luc-product-images")
+        .from("Shop Hub-product-images")
         .upload(filePath, file);
       if (uploadError) throw uploadError;
 
       const { data: publicUrlData } = supabaseClient.storage
-        .from("luc-product-images")
+        .from("Shop Hub-product-images")
         .getPublicUrl(filePath);
 
       payload.image_url = publicUrlData.publicUrl;
@@ -154,13 +154,13 @@ productForm.addEventListener("submit", async (e) => {
 
     if (editingProductId.value) {
       const { error: updateError } = await supabaseClient
-        .from("luc_products")
+        .from("Shop Hub_products")
         .update(payload)
         .eq("id", editingProductId.value);
       if (updateError) throw updateError;
       showMsg(productMsg, "Product updated successfully.", "success");
     } else {
-      const { error: insertError } = await supabaseClient.from("luc_products").insert([payload]);
+      const { error: insertError } = await supabaseClient.from("Shop Hub_products").insert([payload]);
       if (insertError) throw insertError;
       showMsg(productMsg, "Product added successfully.", "success");
     }
@@ -193,7 +193,7 @@ async function loadProductsTable() {
   tableBody.innerHTML = "";
 
   const { data, error } = await supabaseClient
-    .from("luc_products")
+    .from("Shop Hub_products")
     .select("*")
     .order("created_at", { ascending: false });
 
@@ -211,7 +211,7 @@ async function loadProductsTable() {
   }
 
   tableBody.innerHTML = data.map(productRowHtml).join("");
-  window.__lucProducts = data;
+  window.__Shop HubProducts = data;
 }
 
 function productRowHtml(product) {
@@ -235,7 +235,7 @@ tableBody.addEventListener("click", async (e) => {
   if (!id) return;
 
   if (e.target.classList.contains("btn-edit")) {
-    const product = (window.__lucProducts || []).find((p) => p.id === id);
+    const product = (window.__Shop HubProducts || []).find((p) => p.id === id);
     if (!product) return;
 
     editingProductId.value = product.id;
@@ -260,7 +260,7 @@ tableBody.addEventListener("click", async (e) => {
     e.target.disabled = true;
     e.target.textContent = "Deleting...";
 
-    const { error: deleteError } = await supabaseClient.from("luc_products").delete().eq("id", id);
+    const { error: deleteError } = await supabaseClient.from("Shop Hub_products").delete().eq("id", id);
 
     if (deleteError) {
       alert("Failed to delete product: " + deleteError.message);
@@ -271,9 +271,9 @@ tableBody.addEventListener("click", async (e) => {
 
     try {
       const imageUrl = e.target.dataset.image;
-      const path = imageUrl.split("/luc-product-images/")[1];
+      const path = imageUrl.split("/Shop Hub-product-images/")[1];
       if (path) {
-        await supabaseClient.storage.from("luc-product-images").remove([path]);
+        await supabaseClient.storage.from("Shop Hub-product-images").remove([path]);
       }
     } catch (err) {
       console.warn("Could not remove storage file:", err);
@@ -296,7 +296,7 @@ async function loadOrdersTable() {
   ordersTableBody.innerHTML = "";
 
   const { data, error } = await supabaseClient
-    .from("luc_orders")
+    .from("Shop Hub_orders")
     .select("*")
     .order("created_at", { ascending: false });
 
@@ -354,7 +354,7 @@ ordersTableBody.addEventListener("change", async (e) => {
   const newStatus = e.target.value;
 
   const { error } = await supabaseClient
-    .from("luc_orders")
+    .from("Shop Hub_orders")
     .update({ order_status: newStatus })
     .eq("id", id);
 
@@ -375,7 +375,7 @@ ordersTableBody.addEventListener("click", async (e) => {
   e.target.textContent = "Saving...";
 
   const { error } = await supabaseClient
-    .from("luc_orders")
+    .from("Shop Hub_orders")
     .update({ payment_status: "paid" })
     .eq("id", id);
 
