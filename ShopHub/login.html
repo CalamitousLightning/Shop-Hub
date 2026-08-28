@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Login — ShopHub Marketplace</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner container">
+      <a href="index.html" class="logo">ShopHub <span class="accent-orange">Marketplace</span></a>
+      <div class="header-actions">
+        <a href="cart.html" class="icon-link" aria-label="Cart">
+          🛒<span class="cart-badge" id="cartBadgeDesktop" hidden>0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ===== LOGIN FORM ===== -->
+    <section id="loginSection" class="form-card">
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Log in to check out and track your orders</p>
+      <form id="loginForm">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" required placeholder="you@example.com" />
+
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" required placeholder="••••••••" />
+
+        <button type="submit" class="btn btn-primary" id="loginBtn">Log In</button>
+        <p id="loginError" class="error-msg" hidden></p>
+      </form>
+      <p class="form-switch">Don't have an account? <a href="#" id="showSignup">Sign up</a></p>
+    </section>
+
+    <!-- ===== SIGNUP FORM ===== -->
+    <section id="signupSection" class="form-card" hidden>
+      <h2>Create Your Account</h2>
+      <p class="subtitle">Sign up to shop and track your orders</p>
+      <form id="signupForm">
+        <label for="signupName">Full Name</label>
+        <input type="text" id="signupName" required placeholder="Kwame Mensah" />
+
+        <label for="signupEmail">Email</label>
+        <input type="email" id="signupEmail" required placeholder="you@example.com" />
+
+        <label for="signupPhone">Phone Number</label>
+        <input type="tel" id="signupPhone" required placeholder="0241234567" />
+
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" required minlength="6" placeholder="At least 6 characters" />
+
+        <button type="submit" class="btn btn-primary" id="signupBtn">Sign Up</button>
+        <p id="signupError" class="error-msg" hidden></p>
+        <p id="signupSuccess" class="success-msg" hidden></p>
+      </form>
+      <p class="form-switch">Already have an account? <a href="#" id="showLogin">Log in</a></p>
+    </section>
+
+    <!-- ===== LOGGED IN VIEW ===== -->
+    <section id="loggedInSection" class="form-card" hidden>
+      <h2>You're Logged In</h2>
+      <p class="subtitle" id="loggedInEmail"></p>
+      <a href="index.html" class="btn btn-primary" style="display:block; margin-bottom:10px;">Continue Shopping</a>
+      <a href="orders.html" class="btn btn-blue" style="display:block; margin-bottom:10px;">My Orders</a>
+      <button class="btn btn-outline" id="logoutBtn" style="width:100%;">Log Out</button>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="index.html"><span class="bn-icon">🏠</span>Home</a>
+    <a href="cart.html"><span class="bn-icon">🛒</span>Cart<span class="cart-badge" id="cartBadgeMobile" hidden>0</span></a>
+    <a href="orders.html"><span class="bn-icon">📦</span>Orders</a>
+    <a href="login.html" class="active"><span class="bn-icon">👤</span>Account</a>
+  </nav>
+
+  <footer class="site-footer">
+    <p><a href="admin.html" class="footer-admin-entry" aria-label="Site">&copy;</a> 2026 ShopHub Marketplace — ShopHub.</p>
+    <P>By Nameless Eternal</P>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="supabase-config.js"></script>
+  <script src="cart.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>
