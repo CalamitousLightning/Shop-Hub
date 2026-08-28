@@ -17,11 +17,11 @@ window.SUPABASE_ANON_KEY = "sb_publishable_QWFfDsgSa4gGiMPKAO5EsQ_DLLa_D5y";
 
 // The email address that is allowed to log into admin.html.
 // This MUST match the "YOUR_ADMIN_EMAIL" value you use in setup.sql.
-window.Shop Hub_ADMIN_EMAIL = "admin@shophub.com";
+window.Shophub_ADMIN_EMAIL = "admin@shophub.com";
 
 // WhatsApp number for "Checkout via WhatsApp" (international format, no + or spaces).
 // Example: Ghana number 024 123 4567 -> "233241234567"
-window.Shop Hub_WHATSAPP_NUMBER = "233245955704";
+window.Shophub_WHATSAPP_NUMBER = "233245955704";
 
 // Paystack PUBLIC key (starts with pk_test_ or pk_live_). Never put the secret key here.
-window.Shop Hub_PAYSTACK_PUBLIC_KEY = "pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+window.Shophub_PAYSTACK_PUBLIC_KEY = "pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
