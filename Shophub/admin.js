@@ -28,7 +28,7 @@ function escapeHtml(str) {
 
 async function checkSession() {
   const { data: { session } } = await supabaseClient.auth.getSession();
-  const isAdmin = !!session && session.user.email?.toLowerCase() === window.Shop Hub_ADMIN_EMAIL.toLowerCase();
+  const isAdmin = !!session && session.user.email?.toLowerCase() === window.shophub_ADMIN_EMAIL.toLowerCase();
 
   if (session && !isAdmin) {
     // Logged in, but not the admin account — sign out immediately.
@@ -63,7 +63,7 @@ loginForm.addEventListener("submit", async (e) => {
     return;
   }
 
-  if (data.user.email?.toLowerCase() !== window.Shop Hub_ADMIN_EMAIL.toLowerCase()) {
+  if (data.user.email?.toLowerCase() !== window.shophub_ADMIN_EMAIL.toLowerCase()) {
     await supabaseClient.auth.signOut();
     loginError.textContent = "This account is not authorized as admin.";
     loginError.hidden = false;
@@ -235,7 +235,7 @@ tableBody.addEventListener("click", async (e) => {
   if (!id) return;
 
   if (e.target.classList.contains("btn-edit")) {
-    const product = (window.__Shop HubProducts || []).find((p) => p.id === id);
+    const product = (window.__shophubProducts || []).find((p) => p.id === id);
     if (!product) return;
 
     editingProductId.value = product.id;
@@ -260,7 +260,7 @@ tableBody.addEventListener("click", async (e) => {
     e.target.disabled = true;
     e.target.textContent = "Deleting...";
 
-    const { error: deleteError } = await supabaseClient.from("Shop Hub_products").delete().eq("id", id);
+    const { error: deleteError } = await supabaseClient.from("shophub_products").delete().eq("id", id);
 
     if (deleteError) {
       alert("Failed to delete product: " + deleteError.message);
@@ -271,9 +271,9 @@ tableBody.addEventListener("click", async (e) => {
 
     try {
       const imageUrl = e.target.dataset.image;
-      const path = imageUrl.split("/Shop Hub-product-images/")[1];
+      const path = imageUrl.split("/shophub-product-images/")[1];
       if (path) {
-        await supabaseClient.storage.from("Shop Hub-product-images").remove([path]);
+        await supabaseClient.storage.from("shophub-product-images").remove([path]);
       }
     } catch (err) {
       console.warn("Could not remove storage file:", err);
