@@ -17,7 +17,7 @@ window.SUPABASE_ANON_KEY = "sb_publishable_QWFfDsgSa4gGiMPKAO5EsQ_DLLa_D5y";
 
 // The email address that is allowed to log into admin.html.
 // This MUST match the "YOUR_ADMIN_EMAIL" value you use in setup.sql.
-window.Shop Hub_ADMIN_EMAIL = "logozorasare@gmail.com";
+window.Shop Hub_ADMIN_EMAIL = "admin@shophub.com";
 
 // WhatsApp number for "Checkout via WhatsApp" (international format, no + or spaces).
 // Example: Ghana number 024 123 4567 -> "233241234567"
